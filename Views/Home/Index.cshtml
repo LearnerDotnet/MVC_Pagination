@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model MvcApplication1.Models.IndexViewModel
+<html>
+	<head>
+		<title>Pagination Example</title>
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="col-md-6 col-md-offset-3">
+				<h1>Pagination Example</h1>
+
+				<!-- items being paged -->
+				<ul>
+					@foreach (var item in Model.Items)
+					{
+						<li>@item</li>
+					}
+				</ul>				
+				
+				<!-- pager -->
+				@if (Model.Pagination.EndPage > 1)
+				{
+					<ul class="pagination">
+						@if (Model.Pagination.CurrentPage > 1)
+						{
+							<li>
+								<a href="~/Home/Index"><<</a>
+							</li>
+							<li>
+								<a href="~/Home/Index?page=@(Model.Pagination.CurrentPage - 1)"><</a>
+							</li>
+						}
+
+						@for (var page = Model.Pagination.StartPage; page <= Model.Pagination.EndPage; page++)
+						{
+							<li class="@(page == Model.Pagination.CurrentPage ? "active" : "")">
+								<a href="~/Home/Index?page=@page">@page</a>
+							</li>
+						}
+
+						@if (Model.Pagination.CurrentPage < Model.Pagination.TotalPages)
+						{
+							<li>
+								<a href="~/Home/Index?page=@(Model.Pagination.CurrentPage + 1)">></a>
+							</li>
+							<li>
+								<a href="~/Home/Index?page=@(Model.Pagination.TotalPages)">>></a>
+							</li>
+						}
+					</ul>
+				}				
+			</div>
+		</div>
+	</body>
+</html>
+
